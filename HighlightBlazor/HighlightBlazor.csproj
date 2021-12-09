@@ -10,7 +10,7 @@
     <PackageIcon>highlight.png</PackageIcon>
     <RepositoryUrl>https://github.com/Guyiming/Highlight.Blazor</RepositoryUrl>
     <PackageTags>highlight, blazor, highlight.js, highlight.blazor,</PackageTags>
-    <Version>0.1.5</Version>
+    <Version>0.1.6</Version>
     <PackageReleaseNotes>based on highlight.js 13.3.1</PackageReleaseNotes>
   </PropertyGroup>
 
