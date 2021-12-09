@@ -31,8 +31,8 @@ Add the following line to the `head` tag of your `_Host.cshtml` (Blazor Server a
 These files include the js and default style of highlight.js.
 
 ## 3. Happy to use
+C# Without Highlight
 ```html
-<p>C# Without Highlight</p>
 <pre>
     <code>
                 private int currentCount = 0;
@@ -43,9 +43,9 @@ These files include the js and default style of highlight.js.
                 }
     </code>
 </pre>
-
-<p>C# with indent</p>
-
+```
+C# with indent
+```html
         <CodeHighlight>
                 private int currentCount = 0;
 
@@ -54,10 +54,9 @@ These files include the js and default style of highlight.js.
                     currentCount++;
                 }
         </CodeHighlight>
-
-
-<p>C# without indent</p>
-
+```
+C# without indent
+```html
         <CodeHighlight Indent="false">
                 private int currentCount = 0;
 
@@ -66,10 +65,9 @@ These files include the js and default style of highlight.js.
                     currentCount++;
                 }
         </CodeHighlight>
-
-
-<p>Json with indent</p>
-
+```
+Json with indent
+```html
         <CodeHighlight Indent="true" CodeLanguage="json">
                     {
 	                    "success": true,
@@ -81,8 +79,9 @@ These files include the js and default style of highlight.js.
 	                    ]
                     }
         </CodeHighlight>
-		
-<p> highlight with program</p>
+```
+highlight by program
+```html
 <CodeHighlight>
     @SourceCode
 </CodeHighlight>
