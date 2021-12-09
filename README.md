@@ -81,6 +81,21 @@ These files include the js and default style of highlight.js.
 	                    ]
                     }
         </CodeHighlight>
+		
+<p> highlight with program</p>
+<CodeHighlight>
+    @SourceCode
+</CodeHighlight>
+
+@code {
+    string SourceCode = @"
+    public class Aa
+    {
+    
+    }
+";
+
+}
 ```
 
 ### Supported Languages

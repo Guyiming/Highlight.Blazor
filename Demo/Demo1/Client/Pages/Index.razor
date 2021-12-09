@@ -5,7 +5,7 @@
 
 <p>C# Without Highlight</p>
 <pre>
-    <code>
+<code>
                 private int currentCount = 0;
 
                 private void IncrementCount()
@@ -17,39 +17,54 @@
 
 <p>C# with indent</p>
 
-        <CodeHighlight>
-                private int currentCount = 0;
+<CodeHighlight>
+    private int currentCount = 0;
 
-                private void IncrementCount()
-                {
-                    currentCount++;
-                }
-        </CodeHighlight>
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+</CodeHighlight>
 
 
 <p>C# without indent</p>
 
-        <CodeHighlight Indent="false">
-                private int currentCount = 0;
+<CodeHighlight Indent="false">
+    private int currentCount = 0;
 
-                private void IncrementCount()
-                {
-                    currentCount++;
-                }
-        </CodeHighlight>
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+</CodeHighlight>
 
 
 <p>Json with indent</p>
 
-        <CodeHighlight Indent="true" CodeLanguage="json">
-                    {
-	                    "success": true,
-	                    "data": [
-		                    {
-			                    "billCode": "BSTPU019524859",
-			                    "type": 1
-		                    }
-	                    ]
-                    }
-        </CodeHighlight>
+<CodeHighlight Indent="true" CodeLanguage="json">
+        {
+	        "success": true,
+	        "data": [
+		        {
+			        "billCode": "BSTPU019524859",
+			        "type": 1
+		        }
+	        ]
+        }
+</CodeHighlight>
 
+<p> highlight with program</p>
+
+<CodeHighlight>
+    @SourceCode
+</CodeHighlight>
+
+@code {
+    string SourceCode = @"
+    public class Aa
+    {
+    
+    }
+";
+
+}
