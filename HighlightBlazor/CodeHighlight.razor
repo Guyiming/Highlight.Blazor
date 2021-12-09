@@ -1,0 +1,67 @@
+﻿@using System.Text
+@using Microsoft.JSInterop
+@inject IJSRuntime JS
+
+
+<pre><code class="@CodeLanguage" id="@DisplayId">@IndenttedCode</code></pre>
+
+<div style="display:none" id="@HideId">
+    @ChildContent
+</div>
+
+
+@code {
+
+    string HideId { get; set; } = Guid.NewGuid().ToString();
+    string DisplayId { get; set; } = Guid.NewGuid().ToString();
+    string IndenttedCode { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public string CodeLanguage { get; set; } = "language-csharp";
+
+    [Parameter]
+    public bool Indent { get; set; } = true;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            string innerText = await JS.InvokeAsync<string>("getInnterText", HideId);
+            Console.WriteLine($"----->{innerText}");
+
+            IndenttedCode = Indent ? IndentCode(innerText) : innerText;
+
+            Console.WriteLine($"--------->{IndenttedCode}");
+            StateHasChanged();
+
+            await JS.InvokeVoidAsync("highlightElementById", DisplayId);
+        }
+    }
+
+    public string IndentCode(string originCode)
+    {
+        if (!string.IsNullOrWhiteSpace(originCode))
+        {
+            var lines = originCode.Split('\n').Where(s => !string.IsNullOrWhiteSpace(s)).ToArray();
+            Console.WriteLine($"---------lines1----->{lines.Count()}");
+            int i = 0;
+            var spaceCount = lines[0].Length - lines[0].TrimStart().Length;
+            StringBuilder sb = new StringBuilder();
+            foreach (var line in lines)
+            {
+                if (!string.IsNullOrWhiteSpace(line))
+                {
+                    string s = line.Substring(spaceCount);
+                    sb.AppendLine(s);
+                    i++;
+                }
+            }
+            Console.WriteLine($"---------lines2----->{i}");
+            return sb.ToString();
+        }
+        return string.Empty;
+    }
+}
