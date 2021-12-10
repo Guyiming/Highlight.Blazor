@@ -1,5 +1,5 @@
 # Highlight.Blazor
-Syntax highlighting for Blazor, based on highlight.js
+Syntax highlighting for Blazor, based on [highlight.js](https://highlightjs.org/)
 
 | Build | NuGet |
 |--|--|
