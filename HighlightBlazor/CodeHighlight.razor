@@ -25,6 +25,19 @@
     [Parameter]
     public bool Indent { get; set; } = true;
 
+    [Parameter]
+    public string StyleUrl { get; set; }
+
+
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (!string.IsNullOrEmpty(StyleUrl))
+        {
+            await JS.InvokeVoidAsync("loadCss", StyleUrl);
+        }
+    }
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)

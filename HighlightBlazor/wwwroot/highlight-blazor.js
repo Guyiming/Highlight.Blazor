@@ -7,6 +7,18 @@ window.highlightElementById = (id) => {
     return hljs.highlightElement(document.getElementById(id));
 };
 
+window.loadCss = (url) => {
+    if (!url || url.length === 0) {
+        throw new Error('argument "url" is required !');
+    }
+    var head = document.getElementsByTagName('head')[0];
+    var link = document.createElement('link');
+    link.href = url;
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    head.appendChild(link);
+};
+
 
 /*!
   Highlight.js v11.3.1 (git: 2a972d8658)
@@ -21,7 +33,7 @@ var hljs = function () {
             throw Error("set is read-only")
         }), Object.freeze(e), Object.getOwnPropertyNames(e).forEach((t => {
             var a = e[t]
-            ; "object" != typeof a || Object.isFrozen(a) || n(a)
+                ; "object" != typeof a || Object.isFrozen(a) || n(a)
         })), e
     }
     e.exports = n, e.exports.default = n; var t = e.exports; class a {
@@ -36,23 +48,23 @@ var hljs = function () {
             ; return n.forEach((e => { for (const n in e) t[n] = e[n] })), t
     } const s = e => !!e.kind
         ; class o {
-            constructor(e, n) {
-                this.buffer = "", this.classPrefix = n.classPrefix, e.walk(this)
-            } addText(e) {
-                this.buffer += i(e)
-            } openNode(e) {
-                if (!s(e)) return; let n = e.kind
-                    ; n = e.sublanguage ? "language-" + n : ((e, { prefix: n }) => {
-                        if (e.includes(".")) {
-                            const t = e.split(".")
-                                ; return [`${n}${t.shift()}`, ...t.map(((e, n) => `${e}${"_".repeat(n + 1)}`))].join(" ")
-                        } return `${n}${e}`
-                    })(n, { prefix: this.classPrefix }), this.span(n)
-            } closeNode(e) {
-                s(e) && (this.buffer += "</span>")
-            } value() { return this.buffer } span(e) {
-                this.buffer += `<span class="${e}">`
-            }
+        constructor(e, n) {
+            this.buffer = "", this.classPrefix = n.classPrefix, e.walk(this)
+        } addText(e) {
+            this.buffer += i(e)
+        } openNode(e) {
+            if (!s(e)) return; let n = e.kind
+                ; n = e.sublanguage ? "language-" + n : ((e, { prefix: n }) => {
+                    if (e.includes(".")) {
+                        const t = e.split(".")
+                            ; return [`${n}${t.shift()}`, ...t.map(((e, n) => `${e}${"_".repeat(n + 1)}`))].join(" ")
+                    } return `${n}${e}`
+                })(n, { prefix: this.classPrefix }), this.span(n)
+        } closeNode(e) {
+            s(e) && (this.buffer += "</span>")
+        } value() { return this.buffer } span(e) {
+            this.buffer += `<span class="${e}">`
+        }
     } class l {
         constructor() {
             this.rootNode = {
@@ -64,7 +76,7 @@ var hljs = function () {
             this.top.children.push(e)
         } openNode(e) {
             const n = { kind: e, children: [] }
-            ; this.add(n), this.stack.push(n)
+                ; this.add(n), this.stack.push(n)
         } closeNode() {
             if (this.stack.length > 1) return this.stack.pop()
         } closeAllNodes() {
@@ -83,7 +95,7 @@ var hljs = function () {
         addKeyword(e, n) { "" !== e && (this.openNode(n), this.addText(e), this.closeNode()) }
         addText(e) { "" !== e && this.add(e) } addSublanguage(e, n) {
             const t = e.root
-            ; t.kind = n, t.sublanguage = !0, this.add(t)
+                ; t.kind = n, t.sublanguage = !0, this.add(t)
         } toHTML() {
             return new o(this, this.options).value()
         } finalize() { return !0 }
@@ -135,10 +147,10 @@ var hljs = function () {
         RE_STARTERS_RE: "!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|-|-=|/=|/|:|;|<<|<<=|<=|<|===|==|=|>>>=|>>=|>=|>>>|>>|>|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~",
         SHEBANG: (e = {}) => {
             const n = /^#![ ]*\//
-            ; return e.binary && (e.begin = m(n, /.*\b/, e.binary, /\b.*/)), r({
-                scope: "meta", begin: n,
-                end: /$/, relevance: 0, "on:begin": (e, n) => { 0 !== e.index && n.ignoreMatch() }
-            }, e)
+                ; return e.binary && (e.begin = m(n, /.*\b/, e.binary, /\b.*/)), r({
+                    scope: "meta", begin: n,
+                    end: /$/, relevance: 0, "on:begin": (e, n) => { 0 !== e.index && n.ignoreMatch() }
+                }, e)
         },
         BACKSLASH_ESCAPE: O, APOS_STRING_MODE: x, QUOTE_STRING_MODE: M, PHRASAL_WORDS_MODE: {
             begin: /\b(a|an|the|are|I'm|isn't|don't|doesn't|won't|but|just|should|pretty|simply|enough|gonna|going|wtf|so|such|will|you|your|they|like|more)\b/
@@ -191,14 +203,14 @@ var hljs = function () {
     }, z = ["of", "and", "for", "in", "not", "or", "if", "then", "parent", "list", "value"]
         ; function U(e, n, t = "keyword") {
             const a = Object.create(null)
-            ; return "string" == typeof e ? i(t, e.split(" ")) : Array.isArray(e) ? i(t, e) : Object.keys(e).forEach((t => {
-                Object.assign(a, U(e[t], n, t))
-            })), a; function i(e, t) {
-                n && (t = t.map((e => e.toLowerCase()))), t.forEach((n => {
-                    const t = n.split("|")
-                    ; a[t[0]] = [e, j(t[0], t[1])]
-                }))
-            }
+                ; return "string" == typeof e ? i(t, e.split(" ")) : Array.isArray(e) ? i(t, e) : Object.keys(e).forEach((t => {
+                    Object.assign(a, U(e[t], n, t))
+                })), a; function i(e, t) {
+                    n && (t = t.map((e => e.toLowerCase()))), t.forEach((n => {
+                        const t = n.split("|")
+                            ; a[t[0]] = [e, j(t[0], t[1])]
+                    }))
+                }
         } function j(e, n) {
             return n ? Number(n) : (e => z.includes(e.toLowerCase()))(e) ? 0 : 1
         } const P = {}, K = e => {
@@ -244,13 +256,13 @@ var hljs = function () {
                         this.matchAt += _(e) + 1
                 } compile() {
                     0 === this.regexes.length && (this.exec = () => null)
-                    ; const e = this.regexes.map((e => e[1])); this.matcherRe = n(f(e, {
-                        joinWith: "|"
-                    }), !0), this.lastIndex = 0
+                        ; const e = this.regexes.map((e => e[1])); this.matcherRe = n(f(e, {
+                            joinWith: "|"
+                        }), !0), this.lastIndex = 0
                 } exec(e) {
                     this.matcherRe.lastIndex = this.lastIndex
-                    ; const n = this.matcherRe.exec(e); if (!n) return null
-                        ; const t = n.findIndex(((e, n) => n > 0 && void 0 !== e)), a = this.matchIndexes[t]
+                        ; const n = this.matcherRe.exec(e); if (!n) return null
+                            ; const t = n.findIndex(((e, n) => n > 0 && void 0 !== e)), a = this.matchIndexes[t]
                         ; return n.splice(0, t), Object.assign(n, a)
                 }
             } class a {
@@ -279,9 +291,9 @@ var hljs = function () {
                 e.contains && e.contains.includes("self")) throw Error("ERR: contains `self` is not supported at the top-level of a language.  See documentation.")
                 ; return e.classNameAliases = r(e.classNameAliases || {}), function t(i, s) {
                     const o = i
-                    ; if (i.isCompiled) return o
-                        ;[D, B, W, F].forEach((e => e(i, s))), e.compilerExtensions.forEach((e => e(i, s))),
-                            i.__beforeBegin = null, [I, L, $].forEach((e => e(i, s))), i.isCompiled = !0; let l = null
+                        ; if (i.isCompiled) return o
+                            ;[D, B, W, F].forEach((e => e(i, s))), e.compilerExtensions.forEach((e => e(i, s))),
+                                i.__beforeBegin = null, [I, L, $].forEach((e => e(i, s))), i.isCompiled = !0; let l = null
                         ; return "object" == typeof i.keywords && i.keywords.$pattern && (i.keywords = Object.assign({}, i.keywords),
                             l = i.keywords.$pattern,
                             delete i.keywords.$pattern), l = l || /\w+/, i.keywords && (i.keywords = U(i.keywords, e.case_insensitive)),
@@ -298,11 +310,11 @@ var hljs = function () {
                                 t(e, o)
                             })), i.starts && t(i.starts, s), o.matcher = (e => {
                                 const n = new a
-                                ; return e.contains.forEach((e => n.addRule(e.begin, {
-                                    rule: e, type: "begin"
-                                }))), e.terminatorEnd && n.addRule(e.terminatorEnd, {
-                                    type: "end"
-                                }), e.illegal && n.addRule(e.illegal, { type: "illegal" }), n
+                                    ; return e.contains.forEach((e => n.addRule(e.begin, {
+                                        rule: e, type: "begin"
+                                    }))), e.terminatorEnd && n.addRule(e.terminatorEnd, {
+                                        type: "end"
+                                    }), e.illegal && n.addRule(e.illegal, { type: "illegal" }), n
                             })(o), o
                 }(e)
         } function X(e) {
@@ -322,10 +334,10 @@ var hljs = function () {
                 return d.noHighlightRe.test(e)
             } function h(e, n, t) {
                 let a = "", i = ""
-                ; "object" == typeof n ? (a = e,
-                    t = n.ignoreIllegals, i = n.language) : (H("10.7.0", "highlight(lang, code, ...args) has been deprecated."),
-                        H("10.7.0", "Please use highlight(code, options) instead.\nhttps://github.com/highlightjs/highlight.js/issues/2277"),
-                        i = e, a = n), void 0 === t && (t = !0); const r = { code: a, language: i }; M("before:highlight", r)
+                    ; "object" == typeof n ? (a = e,
+                        t = n.ignoreIllegals, i = n.language) : (H("10.7.0", "highlight(lang, code, ...args) has been deprecated."),
+                            H("10.7.0", "Please use highlight(code, options) instead.\nhttps://github.com/highlightjs/highlight.js/issues/2277"),
+                            i = e, a = n), void 0 === t && (t = !0); const r = { code: a, language: i }; M("before:highlight", r)
                     ; const s = r.result ? r.result : f(r.language, r.code, t)
                     ; return s.code = r.code, M("after:highlight", s), s
             } function f(e, t, i, r) {
@@ -334,12 +346,12 @@ var hljs = function () {
                         ; let e = 0; x.keywordPatternRe.lastIndex = 0; let n = x.keywordPatternRe.exec(S), t = ""
                         ; for (; n;) {
                             t += S.substring(e, n.index)
-                            ; const i = N.case_insensitive ? n[0].toLowerCase() : n[0], r = (a = i, x.keywords[a]); if (r) {
-                                const [e, a] = r
-                                    ; if (k.addText(t), t = "", l[i] = (l[i] || 0) + 1, l[i] <= 7 && (A += a), e.startsWith("_")) t += n[0]; else {
-                                        const t = N.classNameAliases[e] || e; k.addKeyword(n[0], t)
-                                    }
-                            } else t += n[0]
+                                ; const i = N.case_insensitive ? n[0].toLowerCase() : n[0], r = (a = i, x.keywords[a]); if (r) {
+                                    const [e, a] = r
+                                        ; if (k.addText(t), t = "", l[i] = (l[i] || 0) + 1, l[i] <= 7 && (A += a), e.startsWith("_")) t += n[0]; else {
+                                            const t = N.classNameAliases[e] || e; k.addKeyword(n[0], t)
+                                        }
+                                } else t += n[0]
                                 ; e = x.keywordPatternRe.lastIndex, n = x.keywordPatternRe.exec(S)
                         } var a
                         ; t += S.substr(e), k.addText(t)
@@ -355,7 +367,7 @@ var hljs = function () {
                     let t = 1; for (; void 0 !== n[t];) {
                         if (!e._emit[t]) {
                             t++
-                            ; continue
+                                ; continue
                         } const a = N.classNameAliases[e[t]] || e[t], i = n[t]
                             ; a ? k.addKeyword(i, a) : (S = i, c(), S = ""), t++
                     }
@@ -370,11 +382,11 @@ var hljs = function () {
                 } function m(e, n, t) {
                     let i = ((e, n) => {
                         const t = e && e.exec(n)
-                        ; return t && 0 === t.index
+                            ; return t && 0 === t.index
                     })(e.endRe, t); if (i) {
                         if (e["on:end"]) {
                             const t = new a(e)
-                            ; e["on:end"](n, t), t.isMatchIgnored && (i = !1)
+                                ; e["on:end"](n, t), t.isMatchIgnored && (i = !1)
                         } if (i) {
                             for (; e.endsParent && e.parent;)e = e.parent; return e
                         }
@@ -396,7 +408,7 @@ var hljs = function () {
                         ; if ("begin" === h.type && "end" === r.type && h.index === r.index && "" === o) {
                             if (S += t.slice(r.index, r.index + 1), !s) {
                                 const n = Error(`0 width match regex (${e})`)
-                                ; throw n.languageName = e, n.badRule = h.rule, n
+                                    ; throw n.languageName = e, n.badRule = h.rule, n
                             } return 1
                         }
                     if (h = r, "begin" === r.type) return (e => {
@@ -416,8 +428,8 @@ var hljs = function () {
                     ; if (!N) throw K(o.replace("{}", e)), Error('Unknown language: "' + e + '"')
                         ; const w = Q(N); let O = "", x = r || w; const M = {}, k = new d.__emitter(d); (() => {
                             const e = []
-                            ; for (let n = x; n !== N; n = n.parent)n.scope && e.unshift(n.scope)
-                                ; e.forEach((e => k.openNode(e)))
+                                ; for (let n = x; n !== N; n = n.parent)n.scope && e.unshift(n.scope)
+                                    ; e.forEach((e => k.openNode(e)))
                         })(); let S = "", A = 0, C = 0, T = 0, R = !1; try {
                             for (x.matcher.considerAll(); ;) {
                                 T++, R ? R = !1 : x.matcher.considerAll(), x.matcher.lastIndex = C
@@ -456,8 +468,8 @@ var hljs = function () {
                     let n = e.className + " "; n += e.parentNode ? e.parentNode.className : ""
                         ; const t = d.languageDetectRe.exec(n); if (t) {
                             const n = v(t[1])
-                            ; return n || (q(o.replace("{}", t[1])),
-                                q("Falling back to no-highlight mode for this block.", e)), n ? t[1] : "no-highlight"
+                                ; return n || (q(o.replace("{}", t[1])),
+                                    q("Falling back to no-highlight mode for this block.", e)), n ? t[1] : "no-highlight"
                         }
                     return n.split(/\s+/).find((e => _(e) || v(e)))
                 })(e); if (_(t)) return
@@ -470,7 +482,7 @@ var hljs = function () {
                     ; n = e; const a = n.textContent, r = t ? h(a, { language: t, ignoreIllegals: !0 }) : E(a)
                     ; e.innerHTML = r.value, ((e, n, t) => {
                         const a = n && i[n] || t
-                        ; e.classList.add("hljs"), e.classList.add("language-" + a)
+                            ; e.classList.add("hljs"), e.classList.add("language-" + a)
                     })(e, t, r.language), e.result = {
                         language: r.language, re: r.relevance,
                         relevance: r.relevance
@@ -486,7 +498,7 @@ var hljs = function () {
             }))
         } function x(e) {
             const n = v(e)
-            ; return n && !n.disableAutodetect
+                ; return n && !n.disableAutodetect
         } function M(e, n) {
             const t = e; r.forEach((e => {
                 e[t] && e[t](n)
@@ -514,7 +526,7 @@ var hljs = function () {
                 })
             }, unregisterLanguage: e => {
                 delete n[e]
-                ; for (const n of Object.keys(i)) i[n] === e && delete i[n]
+                    ; for (const n of Object.keys(i)) i[n] === e && delete i[n]
             },
             listLanguages: () => Object.keys(n), getLanguage: v, registerAliases: O,
             autoDetection: x, inherit: Y, addPlugin: e => {
@@ -571,7 +583,7 @@ var hljs = function () {
                         ; if ("<" === a || "," === a) return void n.ignoreMatch(); let i
                         ; ">" === a && (((e, { after: n }) => {
                             const t = "</" + e[0].slice(1)
-                            ; return -1 !== e.input.indexOf(t, n)
+                                ; return -1 !== e.input.indexOf(t, n)
                         })(e, {
                             after: t
                         }) || n.ignoreMatch()), (i = e.input.substr(t).match(/^\s+extends\s+/)) && 0 === i.index && n.ignoreMatch()
@@ -689,7 +701,7 @@ var hljs = function () {
                                 }]
                             }]
                         }, { begin: /,/, relevance: 0 }, {
-                            match: /\s+/,
+                                match: /\s+/,
                                 relevance: 0
                             }, {
                                 variants: [{ begin: "<>", end: "</>" }, {
@@ -727,40 +739,40 @@ var hljs = function () {
                 const n = e.regex, t = {}, a = {
                     begin: /\$\{/, end: /\}/, contains: ["self", { begin: /:-/, contains: [t] }]
                 }
-                ; Object.assign(t, {
-                    className: "variable", variants: [{
-                        begin: n.concat(/\$[\w\d#@][\w\d_]*/, "(?![\\w\\d])(?![$])")
-                    }, a]
-                }); const i = {
-                    className: "subst", begin: /\$\(/, end: /\)/, contains: [e.BACKSLASH_ESCAPE]
-                }, r = {
-                    begin: /<<-?\s*(?=\w+)/, starts: {
-                        contains: [e.END_SAME_AS_BEGIN({
-                            begin: /(\w+)/,
-                            end: /(\w+)/, className: "string"
-                        })]
+                    ; Object.assign(t, {
+                        className: "variable", variants: [{
+                            begin: n.concat(/\$[\w\d#@][\w\d_]*/, "(?![\\w\\d])(?![$])")
+                        }, a]
+                    }); const i = {
+                        className: "subst", begin: /\$\(/, end: /\)/, contains: [e.BACKSLASH_ESCAPE]
+                    }, r = {
+                        begin: /<<-?\s*(?=\w+)/, starts: {
+                            contains: [e.END_SAME_AS_BEGIN({
+                                begin: /(\w+)/,
+                                end: /(\w+)/, className: "string"
+                            })]
+                        }
+                    }, s = {
+                        className: "string", begin: /"/, end: /"/,
+                        contains: [e.BACKSLASH_ESCAPE, t, i]
+                    }; i.contains.push(s); const o = {
+                        begin: /\$\(\(/,
+                        end: /\)\)/, contains: [{ begin: /\d+#[0-9a-f]+/, className: "number" }, e.NUMBER_MODE, t]
+                    }, l = e.SHEBANG({
+                        binary: "(fish|bash|zsh|sh|csh|ksh|tcsh|dash|scsh)", relevance: 10
+                    }), c = {
+                        className: "function", begin: /\w[\w\d_]*\s*\(\s*\)\s*\{/, returnBegin: !0,
+                        contains: [e.inherit(e.TITLE_MODE, { begin: /\w[\w\d_]*/ })], relevance: 0
+                    }; return {
+                        name: "Bash", aliases: ["sh"], keywords: {
+                            $pattern: /\b[a-z._-]+\b/,
+                            keyword: ["if", "then", "else", "elif", "fi", "for", "while", "in", "do", "done", "case", "esac", "function"],
+                            literal: ["true", "false"],
+                            built_in: ["break", "cd", "continue", "eval", "exec", "exit", "export", "getopts", "hash", "pwd", "readonly", "return", "shift", "test", "times", "trap", "umask", "unset", "alias", "bind", "builtin", "caller", "command", "declare", "echo", "enable", "help", "let", "local", "logout", "mapfile", "printf", "read", "readarray", "source", "type", "typeset", "ulimit", "unalias", "set", "shopt", "autoload", "bg", "bindkey", "bye", "cap", "chdir", "clone", "comparguments", "compcall", "compctl", "compdescribe", "compfiles", "compgroups", "compquote", "comptags", "comptry", "compvalues", "dirs", "disable", "disown", "echotc", "echoti", "emulate", "fc", "fg", "float", "functions", "getcap", "getln", "history", "integer", "jobs", "kill", "limit", "log", "noglob", "popd", "print", "pushd", "pushln", "rehash", "sched", "setcap", "setopt", "stat", "suspend", "ttyctl", "unfunction", "unhash", "unlimit", "unsetopt", "vared", "wait", "whence", "where", "which", "zcompile", "zformat", "zftp", "zle", "zmodload", "zparseopts", "zprof", "zpty", "zregexparse", "zsocket", "zstyle", "ztcp", "chcon", "chgrp", "chown", "chmod", "cp", "dd", "df", "dir", "dircolors", "ln", "ls", "mkdir", "mkfifo", "mknod", "mktemp", "mv", "realpath", "rm", "rmdir", "shred", "sync", "touch", "truncate", "vdir", "b2sum", "base32", "base64", "cat", "cksum", "comm", "csplit", "cut", "expand", "fmt", "fold", "head", "join", "md5sum", "nl", "numfmt", "od", "paste", "ptx", "pr", "sha1sum", "sha224sum", "sha256sum", "sha384sum", "sha512sum", "shuf", "sort", "split", "sum", "tac", "tail", "tr", "tsort", "unexpand", "uniq", "wc", "arch", "basename", "chroot", "date", "dirname", "du", "echo", "env", "expr", "factor", "groups", "hostid", "id", "link", "logname", "nice", "nohup", "nproc", "pathchk", "pinky", "printenv", "printf", "pwd", "readlink", "runcon", "seq", "sleep", "stat", "stdbuf", "stty", "tee", "test", "timeout", "tty", "uname", "unlink", "uptime", "users", "who", "whoami", "yes"]
+                        }, contains: [l, e.SHEBANG(), c, o, e.HASH_COMMENT_MODE, r, { match: /(\/[a-z._-]+)+/ }, s, {
+                            className: "", begin: /\\"/
+                        }, { className: "string", begin: /'/, end: /'/ }, t]
                     }
-                }, s = {
-                    className: "string", begin: /"/, end: /"/,
-                    contains: [e.BACKSLASH_ESCAPE, t, i]
-                }; i.contains.push(s); const o = {
-                    begin: /\$\(\(/,
-                    end: /\)\)/, contains: [{ begin: /\d+#[0-9a-f]+/, className: "number" }, e.NUMBER_MODE, t]
-                }, l = e.SHEBANG({
-                    binary: "(fish|bash|zsh|sh|csh|ksh|tcsh|dash|scsh)", relevance: 10
-                }), c = {
-                    className: "function", begin: /\w[\w\d_]*\s*\(\s*\)\s*\{/, returnBegin: !0,
-                    contains: [e.inherit(e.TITLE_MODE, { begin: /\w[\w\d_]*/ })], relevance: 0
-                }; return {
-                    name: "Bash", aliases: ["sh"], keywords: {
-                        $pattern: /\b[a-z._-]+\b/,
-                        keyword: ["if", "then", "else", "elif", "fi", "for", "while", "in", "do", "done", "case", "esac", "function"],
-                        literal: ["true", "false"],
-                        built_in: ["break", "cd", "continue", "eval", "exec", "exit", "export", "getopts", "hash", "pwd", "readonly", "return", "shift", "test", "times", "trap", "umask", "unset", "alias", "bind", "builtin", "caller", "command", "declare", "echo", "enable", "help", "let", "local", "logout", "mapfile", "printf", "read", "readarray", "source", "type", "typeset", "ulimit", "unalias", "set", "shopt", "autoload", "bg", "bindkey", "bye", "cap", "chdir", "clone", "comparguments", "compcall", "compctl", "compdescribe", "compfiles", "compgroups", "compquote", "comptags", "comptry", "compvalues", "dirs", "disable", "disown", "echotc", "echoti", "emulate", "fc", "fg", "float", "functions", "getcap", "getln", "history", "integer", "jobs", "kill", "limit", "log", "noglob", "popd", "print", "pushd", "pushln", "rehash", "sched", "setcap", "setopt", "stat", "suspend", "ttyctl", "unfunction", "unhash", "unlimit", "unsetopt", "vared", "wait", "whence", "where", "which", "zcompile", "zformat", "zftp", "zle", "zmodload", "zparseopts", "zprof", "zpty", "zregexparse", "zsocket", "zstyle", "ztcp", "chcon", "chgrp", "chown", "chmod", "cp", "dd", "df", "dir", "dircolors", "ln", "ls", "mkdir", "mkfifo", "mknod", "mktemp", "mv", "realpath", "rm", "rmdir", "shred", "sync", "touch", "truncate", "vdir", "b2sum", "base32", "base64", "cat", "cksum", "comm", "csplit", "cut", "expand", "fmt", "fold", "head", "join", "md5sum", "nl", "numfmt", "od", "paste", "ptx", "pr", "sha1sum", "sha224sum", "sha256sum", "sha384sum", "sha512sum", "shuf", "sort", "split", "sum", "tac", "tail", "tr", "tsort", "unexpand", "uniq", "wc", "arch", "basename", "chroot", "date", "dirname", "du", "echo", "env", "expr", "factor", "groups", "hostid", "id", "link", "logname", "nice", "nohup", "nproc", "pathchk", "pinky", "printenv", "printf", "pwd", "readlink", "runcon", "seq", "sleep", "stat", "stdbuf", "stty", "tee", "test", "timeout", "tty", "uname", "unlink", "uptime", "users", "who", "whoami", "yes"]
-                    }, contains: [l, e.SHEBANG(), c, o, e.HASH_COMMENT_MODE, r, { match: /(\/[a-z._-]+)+/ }, s, {
-                        className: "", begin: /\\"/
-                    }, { className: "string", begin: /'/, end: /'/ }, t]
-                }
             },
             grmr_c: e => {
                 const n = e.regex, t = e.COMMENT("//", "$", {
@@ -826,7 +838,7 @@ var hljs = function () {
                     disableAutodetect: !0, illegal: "</", contains: [].concat(b, m, u, [l, {
                         begin: e.IDENT_RE + "::", keywords: g
                     }, {
-                        className: "class",
+                            className: "class",
                             beginKeywords: "enum class struct union", end: /[{;:<>=]/, contains: [{
                                 beginKeywords: "final class struct"
                             }, e.TITLE_MODE]
@@ -943,64 +955,64 @@ var hljs = function () {
                     illegal: /\n/,
                     contains: [{ begin: /\{\{/ }, { begin: /\}\}/ }, { begin: '""' }, o]
                 })
-                ; s.contains = [c, l, i, e.APOS_STRING_MODE, e.QUOTE_STRING_MODE, a, e.C_BLOCK_COMMENT_MODE],
-                    o.contains = [d, l, r, e.APOS_STRING_MODE, e.QUOTE_STRING_MODE, a, e.inherit(e.C_BLOCK_COMMENT_MODE, {
-                        illegal: /\n/
-                    })]; const g = {
-                        variants: [c, l, i, e.APOS_STRING_MODE, e.QUOTE_STRING_MODE]
-                    }, u = {
-                        begin: "<", end: ">", contains: [{ beginKeywords: "in out" }, t]
-                    }, b = e.IDENT_RE + "(<" + e.IDENT_RE + "(\\s*,\\s*" + e.IDENT_RE + ")*>)?(\\[\\])?", m = {
-                        begin: "@" + e.IDENT_RE, relevance: 0
-                    }; return {
-                        name: "C#", aliases: ["cs", "c#"],
-                        keywords: n, illegal: /::/, contains: [e.COMMENT("///", "$", {
-                            returnBegin: !0,
-                            contains: [{
-                                className: "doctag", variants: [{ begin: "///", relevance: 0 }, {
-                                    begin: "\x3c!--|--\x3e"
-                                }, { begin: "</?", end: ">" }]
-                            }]
-                        }), e.C_LINE_COMMENT_MODE, e.C_BLOCK_COMMENT_MODE, {
-                            className: "meta", begin: "#",
-                            end: "$", keywords: {
-                                keyword: "if else elif endif define undef warning error line region endregion pragma checksum"
-                            }
-                        }, g, a, {
-                            beginKeywords: "class interface", relevance: 0, end: /[{;=]/,
-                            illegal: /[^\s:,]/, contains: [{
-                                beginKeywords: "where class"
-                            }, t, u, e.C_LINE_COMMENT_MODE, e.C_BLOCK_COMMENT_MODE]
-                        }, {
-                            beginKeywords: "namespace",
-                            relevance: 0, end: /[{;=]/, illegal: /[^\s:]/,
-                            contains: [t, e.C_LINE_COMMENT_MODE, e.C_BLOCK_COMMENT_MODE]
-                        }, {
-                            beginKeywords: "record", relevance: 0, end: /[{;=]/, illegal: /[^\s:]/,
-                            contains: [t, u, e.C_LINE_COMMENT_MODE, e.C_BLOCK_COMMENT_MODE]
-                        }, {
-                            className: "meta",
-                            begin: "^\\s*\\[(?=[\\w])", excludeBegin: !0, end: "\\]", excludeEnd: !0, contains: [{
-                                className: "string", begin: /"/, end: /"/
-                            }]
-                        }, {
-                            beginKeywords: "new return throw await else", relevance: 0
-                        }, {
-                            className: "function",
-                            begin: "(" + b + "\\s+)+" + e.IDENT_RE + "\\s*(<[^=]+>\\s*)?\\(", returnBegin: !0,
-                            end: /\s*[{;=]/, excludeEnd: !0, keywords: n, contains: [{
-                                beginKeywords: "public private protected static internal protected abstract async extern override unsafe virtual new sealed partial",
-                                relevance: 0
+                    ; s.contains = [c, l, i, e.APOS_STRING_MODE, e.QUOTE_STRING_MODE, a, e.C_BLOCK_COMMENT_MODE],
+                        o.contains = [d, l, r, e.APOS_STRING_MODE, e.QUOTE_STRING_MODE, a, e.inherit(e.C_BLOCK_COMMENT_MODE, {
+                            illegal: /\n/
+                        })]; const g = {
+                            variants: [c, l, i, e.APOS_STRING_MODE, e.QUOTE_STRING_MODE]
+                        }, u = {
+                            begin: "<", end: ">", contains: [{ beginKeywords: "in out" }, t]
+                        }, b = e.IDENT_RE + "(<" + e.IDENT_RE + "(\\s*,\\s*" + e.IDENT_RE + ")*>)?(\\[\\])?", m = {
+                            begin: "@" + e.IDENT_RE, relevance: 0
+                        }; return {
+                            name: "C#", aliases: ["cs", "c#"],
+                            keywords: n, illegal: /::/, contains: [e.COMMENT("///", "$", {
+                                returnBegin: !0,
+                                contains: [{
+                                    className: "doctag", variants: [{ begin: "///", relevance: 0 }, {
+                                        begin: "\x3c!--|--\x3e"
+                                    }, { begin: "</?", end: ">" }]
+                                }]
+                            }), e.C_LINE_COMMENT_MODE, e.C_BLOCK_COMMENT_MODE, {
+                                className: "meta", begin: "#",
+                                end: "$", keywords: {
+                                    keyword: "if else elif endif define undef warning error line region endregion pragma checksum"
+                                }
+                            }, g, a, {
+                                beginKeywords: "class interface", relevance: 0, end: /[{;=]/,
+                                illegal: /[^\s:,]/, contains: [{
+                                    beginKeywords: "where class"
+                                }, t, u, e.C_LINE_COMMENT_MODE, e.C_BLOCK_COMMENT_MODE]
                             }, {
-                                begin: e.IDENT_RE + "\\s*(<[^=]+>\\s*)?\\(", returnBegin: !0,
-                                contains: [e.TITLE_MODE, u], relevance: 0
-                            }, { match: /\(\)/ }, {
-                                className: "params",
-                                begin: /\(/, end: /\)/, excludeBegin: !0, excludeEnd: !0, keywords: n, relevance: 0,
-                                contains: [g, a, e.C_BLOCK_COMMENT_MODE]
-                            }, e.C_LINE_COMMENT_MODE, e.C_BLOCK_COMMENT_MODE]
-                        }, m]
-                    }
+                                beginKeywords: "namespace",
+                                relevance: 0, end: /[{;=]/, illegal: /[^\s:]/,
+                                contains: [t, e.C_LINE_COMMENT_MODE, e.C_BLOCK_COMMENT_MODE]
+                            }, {
+                                beginKeywords: "record", relevance: 0, end: /[{;=]/, illegal: /[^\s:]/,
+                                contains: [t, u, e.C_LINE_COMMENT_MODE, e.C_BLOCK_COMMENT_MODE]
+                            }, {
+                                className: "meta",
+                                begin: "^\\s*\\[(?=[\\w])", excludeBegin: !0, end: "\\]", excludeEnd: !0, contains: [{
+                                    className: "string", begin: /"/, end: /"/
+                                }]
+                            }, {
+                                beginKeywords: "new return throw await else", relevance: 0
+                            }, {
+                                className: "function",
+                                begin: "(" + b + "\\s+)+" + e.IDENT_RE + "\\s*(<[^=]+>\\s*)?\\(", returnBegin: !0,
+                                end: /\s*[{;=]/, excludeEnd: !0, keywords: n, contains: [{
+                                    beginKeywords: "public private protected static internal protected abstract async extern override unsafe virtual new sealed partial",
+                                    relevance: 0
+                                }, {
+                                    begin: e.IDENT_RE + "\\s*(<[^=]+>\\s*)?\\(", returnBegin: !0,
+                                    contains: [e.TITLE_MODE, u], relevance: 0
+                                }, { match: /\(\)/ }, {
+                                    className: "params",
+                                    begin: /\(/, end: /\)/, excludeBegin: !0, excludeEnd: !0, keywords: n, relevance: 0,
+                                    contains: [g, a, e.C_BLOCK_COMMENT_MODE]
+                                }, e.C_LINE_COMMENT_MODE, e.C_BLOCK_COMMENT_MODE]
+                            }, m]
+                        }
             }, grmr_css: e => {
                 const n = e.regex, t = te(e), a = [e.APOS_STRING_MODE, e.QUOTE_STRING_MODE]; return {
                     name: "CSS", case_insensitive: !0, illegal: /[=|'\$]/, keywords: {
@@ -1450,37 +1462,37 @@ var hljs = function () {
                     ; let r = [n, t]
                     ; return a.contains = a.contains.concat(r), i.contains = i.contains.concat(r),
                         r = r.concat(a, i), {
-                            name: "Markdown", aliases: ["md", "mkdown", "mkd"], contains: [{
-                                className: "section", variants: [{ begin: "^#{1,6}", end: "$", contains: r }, {
-                                    begin: "(?=^.+?\\n[=-]{2,}$)", contains: [{ begin: "^[=-]*$" }, {
-                                        begin: "^", end: "\\n",
-                                        contains: r
-                                    }]
-                                }]
-                            }, n, {
-                                className: "bullet", begin: "^[ \t]*([*+-]|(\\d+\\.))(?=\\s+)",
-                                end: "\\s+", excludeEnd: !0
-                            }, a, i, {
-                                className: "quote", begin: "^>\\s+", contains: r,
-                                end: "$"
-                            }, {
-                                className: "code", variants: [{ begin: "(`{3,})[^`](.|\\n)*?\\1`*[ ]*" }, {
-                                    begin: "(~{3,})[^~](.|\\n)*?\\1~*[ ]*"
-                                }, { begin: "```", end: "```+[ ]*$" }, {
-                                    begin: "~~~", end: "~~~+[ ]*$"
-                                }, { begin: "`.+?`" }, {
-                                    begin: "(?=^( {4}|\\t))",
-                                    contains: [{ begin: "^( {4}|\\t)", end: "(\\n)$" }], relevance: 0
-                                }]
-                            }, {
-                                begin: "^[-\\*]{3,}", end: "$"
-                            }, t, {
-                                begin: /^\[[^\n]+\]:/, returnBegin: !0, contains: [{
-                                    className: "symbol", begin: /\[/, end: /\]/, excludeBegin: !0, excludeEnd: !0
-                                }, {
-                                    className: "link", begin: /:\s*/, end: /$/, excludeBegin: !0
+                        name: "Markdown", aliases: ["md", "mkdown", "mkd"], contains: [{
+                            className: "section", variants: [{ begin: "^#{1,6}", end: "$", contains: r }, {
+                                begin: "(?=^.+?\\n[=-]{2,}$)", contains: [{ begin: "^[=-]*$" }, {
+                                    begin: "^", end: "\\n",
+                                    contains: r
                                 }]
                             }]
+                        }, n, {
+                            className: "bullet", begin: "^[ \t]*([*+-]|(\\d+\\.))(?=\\s+)",
+                            end: "\\s+", excludeEnd: !0
+                        }, a, i, {
+                            className: "quote", begin: "^>\\s+", contains: r,
+                            end: "$"
+                        }, {
+                            className: "code", variants: [{ begin: "(`{3,})[^`](.|\\n)*?\\1`*[ ]*" }, {
+                                begin: "(~{3,})[^~](.|\\n)*?\\1~*[ ]*"
+                            }, { begin: "```", end: "```+[ ]*$" }, {
+                                begin: "~~~", end: "~~~+[ ]*$"
+                            }, { begin: "`.+?`" }, {
+                                begin: "(?=^( {4}|\\t))",
+                                contains: [{ begin: "^( {4}|\\t)", end: "(\\n)$" }], relevance: 0
+                            }]
+                        }, {
+                            begin: "^[-\\*]{3,}", end: "$"
+                        }, t, {
+                            begin: /^\[[^\n]+\]:/, returnBegin: !0, contains: [{
+                                className: "symbol", begin: /\[/, end: /\]/, excludeBegin: !0, excludeEnd: !0
+                            }, {
+                                className: "link", begin: /:\s*/, end: /$/, excludeBegin: !0
+                            }]
+                        }]
                     }
             }, grmr_objectivec: e => {
                 const n = /[a-zA-Z@][a-zA-Z0-9_]*/, t = {
@@ -1536,25 +1548,25 @@ var hljs = function () {
                 }, d = (e, a, i) => n.concat(n.concat("(?:", e, ")"), a, /(?:\\.|[^\\\/])*?/, i, t), g = [s, e.HASH_COMMENT_MODE, e.COMMENT(/^=\w/, /=cut/, {
                     endsWithParent: !0
                 }), r, {
-                    className: "string", contains: o, variants: [{
-                        begin: "q[qwxr]?\\s*\\(", end: "\\)", relevance: 5
-                    }, {
-                        begin: "q[qwxr]?\\s*\\[",
-                        end: "\\]", relevance: 5
-                    }, { begin: "q[qwxr]?\\s*\\{", end: "\\}", relevance: 5 }, {
-                        begin: "q[qwxr]?\\s*\\|", end: "\\|", relevance: 5
-                    }, {
-                        begin: "q[qwxr]?\\s*<", end: ">",
-                        relevance: 5
-                    }, { begin: "qw\\s+q", end: "q", relevance: 5 }, {
-                        begin: "'", end: "'",
-                        contains: [e.BACKSLASH_ESCAPE]
-                    }, { begin: '"', end: '"' }, {
-                        begin: "`", end: "`",
-                        contains: [e.BACKSLASH_ESCAPE]
-                    }, { begin: /\{\w+\}/, relevance: 0 }, {
-                        begin: "-?\\w+\\s*=>", relevance: 0
-                    }]
+                        className: "string", contains: o, variants: [{
+                            begin: "q[qwxr]?\\s*\\(", end: "\\)", relevance: 5
+                        }, {
+                            begin: "q[qwxr]?\\s*\\[",
+                            end: "\\]", relevance: 5
+                        }, { begin: "q[qwxr]?\\s*\\{", end: "\\}", relevance: 5 }, {
+                            begin: "q[qwxr]?\\s*\\|", end: "\\|", relevance: 5
+                        }, {
+                            begin: "q[qwxr]?\\s*<", end: ">",
+                            relevance: 5
+                        }, { begin: "qw\\s+q", end: "q", relevance: 5 }, {
+                            begin: "'", end: "'",
+                            contains: [e.BACKSLASH_ESCAPE]
+                        }, { begin: '"', end: '"' }, {
+                            begin: "`", end: "`",
+                            contains: [e.BACKSLASH_ESCAPE]
+                        }, { begin: /\{\w+\}/, relevance: 0 }, {
+                            begin: "-?\\w+\\s*=>", relevance: 0
+                        }]
                     }, {
                         className: "number",
                         begin: "(\\b0[0-7_]+)|(\\b0x[0-9a-fA-F_]+)|(\\b[1-9][0-9_]*(\\.[0-9_]+)?)|[0_]\\b",
@@ -1747,10 +1759,10 @@ var hljs = function () {
                         beginKeywords: "if",
                         relevance: 0
                     }, o, g, e.HASH_COMMENT_MODE, {
-                        match: [/def/, /\s+/, t], scope: {
-                            1: "keyword",
-                            3: "title.function"
-                        }, contains: [u]
+                            match: [/def/, /\s+/, t], scope: {
+                                1: "keyword",
+                                3: "title.function"
+                            }, contains: [u]
                         }, {
                             variants: [{
                                 match: [/class/, /\s+/, t, /\s*/, /\(\s*/, t, /\s*\)/]
@@ -1937,61 +1949,61 @@ var hljs = function () {
                     className: "title.function.invoke", relevance: 0,
                     begin: n.concat(/\b/, /(?!let\b)/, e.IDENT_RE, n.lookahead(/\s*\(/))
                 }, a = "([ui](8|16|32|64|128|size)|f(32|64))?", i = ["drop ", "Copy", "Send", "Sized", "Sync", "Drop", "Fn", "FnMut", "FnOnce", "ToOwned", "Clone", "Debug", "PartialEq", "PartialOrd", "Eq", "Ord", "AsRef", "AsMut", "Into", "From", "Default", "Iterator", "Extend", "IntoIterator", "DoubleEndedIterator", "ExactSizeIterator", "SliceConcatExt", "ToString", "assert!", "assert_eq!", "bitflags!", "bytes!", "cfg!", "col!", "concat!", "concat_idents!", "debug_assert!", "debug_assert_eq!", "env!", "panic!", "file!", "format!", "format_args!", "include_bin!", "include_str!", "line!", "local_data_key!", "module_path!", "option_env!", "print!", "println!", "select!", "stringify!", "try!", "unimplemented!", "unreachable!", "vec!", "write!", "writeln!", "macro_rules!", "assert_ne!", "debug_assert_ne!"]
-                ; return {
-                    name: "Rust", aliases: ["rs"], keywords: {
-                        $pattern: e.IDENT_RE + "!?",
-                        type: ["i8", "i16", "i32", "i64", "i128", "isize", "u8", "u16", "u32", "u64", "u128", "usize", "f32", "f64", "str", "char", "bool", "Box", "Option", "Result", "String", "Vec"],
-                        keyword: ["abstract", "as", "async", "await", "become", "box", "break", "const", "continue", "crate", "do", "dyn", "else", "enum", "extern", "false", "final", "fn", "for", "if", "impl", "in", "let", "loop", "macro", "match", "mod", "move", "mut", "override", "priv", "pub", "ref", "return", "self", "Self", "static", "struct", "super", "trait", "true", "try", "type", "typeof", "unsafe", "unsized", "use", "virtual", "where", "while", "yield"],
-                        literal: ["true", "false", "Some", "None", "Ok", "Err"], built_in: i
-                    }, illegal: "</",
-                    contains: [e.C_LINE_COMMENT_MODE, e.COMMENT("/\\*", "\\*/", {
-                        contains: ["self"]
-                    }), e.inherit(e.QUOTE_STRING_MODE, { begin: /b?"/, illegal: null }), {
-                        className: "string", variants: [{ begin: /b?r(#*)"(.|\n)*?"\1(?!#)/ }, {
-                            begin: /b?'\\?(x\w{2}|u\w{4}|U\w{8}|.)'/
-                        }]
-                    }, {
-                        className: "symbol",
-                        begin: /'[a-zA-Z_][a-zA-Z0-9_]*/
-                    }, {
-                        className: "number", variants: [{
-                            begin: "\\b0b([01_]+)" + a
-                        }, { begin: "\\b0o([0-7_]+)" + a }, {
-                            begin: "\\b0x([A-Fa-f0-9_]+)" + a
+                    ; return {
+                        name: "Rust", aliases: ["rs"], keywords: {
+                            $pattern: e.IDENT_RE + "!?",
+                            type: ["i8", "i16", "i32", "i64", "i128", "isize", "u8", "u16", "u32", "u64", "u128", "usize", "f32", "f64", "str", "char", "bool", "Box", "Option", "Result", "String", "Vec"],
+                            keyword: ["abstract", "as", "async", "await", "become", "box", "break", "const", "continue", "crate", "do", "dyn", "else", "enum", "extern", "false", "final", "fn", "for", "if", "impl", "in", "let", "loop", "macro", "match", "mod", "move", "mut", "override", "priv", "pub", "ref", "return", "self", "Self", "static", "struct", "super", "trait", "true", "try", "type", "typeof", "unsafe", "unsized", "use", "virtual", "where", "while", "yield"],
+                            literal: ["true", "false", "Some", "None", "Ok", "Err"], built_in: i
+                        }, illegal: "</",
+                        contains: [e.C_LINE_COMMENT_MODE, e.COMMENT("/\\*", "\\*/", {
+                            contains: ["self"]
+                        }), e.inherit(e.QUOTE_STRING_MODE, { begin: /b?"/, illegal: null }), {
+                            className: "string", variants: [{ begin: /b?r(#*)"(.|\n)*?"\1(?!#)/ }, {
+                                begin: /b?'\\?(x\w{2}|u\w{4}|U\w{8}|.)'/
+                            }]
                         }, {
-                            begin: "\\b(\\d[\\d_]*(\\.[0-9_]+)?([eE][+-]?[0-9_]+)?)" + a
-                        }], relevance: 0
-                    }, {
-                        begin: [/fn/, /\s+/, e.UNDERSCORE_IDENT_RE], className: {
-                            1: "keyword",
-                            3: "title.function"
-                        }
-                    }, {
-                        className: "meta", begin: "#!?\\[", end: "\\]", contains: [{
-                            className: "string", begin: /"/, end: /"/
-                        }]
-                    }, {
-                        begin: [/let/, /\s+/, /(?:mut\s+)?/, e.UNDERSCORE_IDENT_RE], className: {
-                            1: "keyword",
-                            3: "keyword", 4: "variable"
-                        }
-                    }, {
-                        begin: [/for/, /\s+/, e.UNDERSCORE_IDENT_RE, /\s+/, /in/], className: {
-                            1: "keyword",
-                            3: "variable", 5: "keyword"
-                        }
-                    }, {
-                        begin: [/type/, /\s+/, e.UNDERSCORE_IDENT_RE],
-                        className: { 1: "keyword", 3: "title.class" }
-                    }, {
-                        begin: [/(?:trait|enum|struct|union|impl|for)/, /\s+/, e.UNDERSCORE_IDENT_RE],
-                        className: { 1: "keyword", 3: "title.class" }
-                    }, {
-                        begin: e.IDENT_RE + "::", keywords: {
-                            keyword: "Self", built_in: i
-                        }
-                    }, { className: "punctuation", begin: "->" }, t]
-                }
+                            className: "symbol",
+                            begin: /'[a-zA-Z_][a-zA-Z0-9_]*/
+                        }, {
+                            className: "number", variants: [{
+                                begin: "\\b0b([01_]+)" + a
+                            }, { begin: "\\b0o([0-7_]+)" + a }, {
+                                begin: "\\b0x([A-Fa-f0-9_]+)" + a
+                            }, {
+                                begin: "\\b(\\d[\\d_]*(\\.[0-9_]+)?([eE][+-]?[0-9_]+)?)" + a
+                            }], relevance: 0
+                        }, {
+                            begin: [/fn/, /\s+/, e.UNDERSCORE_IDENT_RE], className: {
+                                1: "keyword",
+                                3: "title.function"
+                            }
+                        }, {
+                            className: "meta", begin: "#!?\\[", end: "\\]", contains: [{
+                                className: "string", begin: /"/, end: /"/
+                            }]
+                        }, {
+                            begin: [/let/, /\s+/, /(?:mut\s+)?/, e.UNDERSCORE_IDENT_RE], className: {
+                                1: "keyword",
+                                3: "keyword", 4: "variable"
+                            }
+                        }, {
+                            begin: [/for/, /\s+/, e.UNDERSCORE_IDENT_RE, /\s+/, /in/], className: {
+                                1: "keyword",
+                                3: "variable", 5: "keyword"
+                            }
+                        }, {
+                            begin: [/type/, /\s+/, e.UNDERSCORE_IDENT_RE],
+                            className: { 1: "keyword", 3: "title.class" }
+                        }, {
+                            begin: [/(?:trait|enum|struct|union|impl|for)/, /\s+/, e.UNDERSCORE_IDENT_RE],
+                            className: { 1: "keyword", 3: "title.class" }
+                        }, {
+                            begin: e.IDENT_RE + "::", keywords: {
+                                keyword: "Self", built_in: i
+                            }
+                        }, { className: "punctuation", begin: "->" }, t]
+                    }
             },
             grmr_scss: e => {
                 const n = te(e), t = se, a = re, i = "@[a-z-]+", r = {
@@ -2053,7 +2065,7 @@ var hljs = function () {
                         name: "SQL", case_insensitive: !0, illegal: /[{}]|<\//, keywords: {
                             $pattern: /\b[\w\.]+/, keyword: ((e, { exceptions: n, when: t } = {}) => {
                                 const a = t
-                                ; return n = n || [], e.map((e => e.match(/\|\d+$/) || n.includes(e) ? e : a(e) ? e + "|0" : e))
+                                    ; return n = n || [], e.map((e => e.match(/\|\d+$/) || n.includes(e) ? e : a(e) ? e + "|0" : e))
                             })(l, { when: e => e.length < 3 }), literal: a, type: i,
                             built_in: ["current_catalog", "current_date", "current_default_transform_group", "current_path", "current_role", "current_schema", "current_transform_group_for_type", "current_user", "session_user", "system_time", "system_user", "current_time", "localtime", "current_timestamp", "localtimestamp"]
                         }, contains: [{
@@ -2180,10 +2192,10 @@ var hljs = function () {
                     }
                     ; for (const e of v.variants) {
                         const n = e.contains.find((e => "interpol" === e.label))
-                        ; n.keywords = l; const t = [...c, ...d, ...b, h, v, ...x]; n.contains = [...t, {
-                            begin: /\(/,
-                            end: /\)/, contains: ["self", ...t]
-                        }]
+                            ; n.keywords = l; const t = [...c, ...d, ...b, h, v, ...x]; n.contains = [...t, {
+                                begin: /\(/,
+                                end: /\)/, contains: ["self", ...t]
+                            }]
                     } return {
                         name: "Swift", keywords: l,
                         contains: [...a, R, D, {
