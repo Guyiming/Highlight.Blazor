@@ -31,7 +31,7 @@ Add the following line to the `head` tag of your `_Host.cshtml` (Blazor Server a
 These files include the js and default style of highlight.js.
 
 ## 3. Happy to use
-C# Without Highlight
+C# without Highlight
 ```html
 <pre>
     <code>
@@ -80,7 +80,7 @@ Json with indent
                     }
         </CodeHighlight>
 ```
-highlight by program
+Highlight by program
 ```html
 <CodeHighlight>
     @SourceCode
@@ -97,13 +97,13 @@ highlight by program
 }
 ```
 
-### Supported Languages
+## Supported Languages
 Same to highlight.js. See [here](https://github.com/highlightjs/highlight.js/blob/main/SUPPORTED_LANGUAGES.md).
 
-You can set language by `CodeLanguage` property, the default is **csharp**.
+You can set language by `CodeLanguage` property, the default value is **csharp**.
 
 
-### Indent
+## Indent
 By set `Indent` to `false`, can show the origin code. Default value is `true`.
 
 
