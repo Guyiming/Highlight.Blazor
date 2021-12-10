@@ -30,7 +30,15 @@ Add the following line to the `head` tag of your `_Host.cshtml` (Blazor Server a
 ```
 These files include the js and default style of highlight.js.
 
-## 3. Happy to use
+## 3. Add Serivce (optional)
+
+You will need to register the highlight services with the service collection if you want to set the code style.
+```csharp
+builder.Services.AddHighlight();
+```
+
+
+## 4. Happy to use
 C# without Highlight
 ```html
 <pre>
@@ -102,30 +110,26 @@ Same to highlight.js. See [here](https://github.com/highlightjs/highlight.js/blo
 
 You can set language by `CodeLanguage` property, the default value is **csharp**.
 
-## Supported Styles
+## Supported Code Styles
 ![Screenshot](codestyle.png)
 
-You can set different styles by `StyleUrl` property.
+You can set different styles by `HighlightService`.
 
 ```html
-<button class="btn btn-primary" @onclick="ApplyStyle">Apply</button>
+@inject HighlightService highlightSrv
 
-<CodeHighlight StyleUrl="@styleUrl">
-    private int currentCount = 0;
+<div>
+    <input type="text" @bind-value="styleUrl" style="width:700px" />
+</div>
 
-    private void IncrementCount()
-    {
-        currentCount++;
-    }
-</CodeHighlight>
+<button class="btn btn-primary" @onclick="ApplyStyle">Apply Style</button>
 
 @code {
-    private string url="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/vs.min.css";
-    private string styleUrl = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/vs.min.css";
+    private string styleUrl = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/a11y-dark.min.css";
 
     private void ApplyStyle()
     {
-        styleUrl = url;
+        highlightSrv.SetStyleAsync(styleUrl);
     }
 }
 ```
@@ -133,6 +137,8 @@ You can set different styles by `StyleUrl` property.
 Full supported styles list, you can see [here](https://cdnjs.com/libraries/highlight.js).
 
 ## Indent
-By set `Indent` to `false`, can show the origin code. Default value is `true`.
+By set `Indent` to `false`, can show the origin code. 
+
+Default value is `true`.
 
 

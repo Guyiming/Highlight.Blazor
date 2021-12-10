@@ -2,27 +2,8 @@
 
 <h1>Style</h1>
 
-<p>
-    <input type="text" @bind-value="url" />
-</p>
-<button class="btn btn-primary" @onclick="ApplyStyle">Apply</button>
 
 
-<CodeHighlight StyleUrl="@styleUrl">
-    private int currentCount = 0;
 
-    private void IncrementCount()
-    {
-        currentCount++;
-    }
-</CodeHighlight>
 
-@code {
-    private string url="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/vs.min.css";
-    private string styleUrl = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/vs.min.css";
 
-    private void ApplyStyle()
-    {
-        styleUrl = url;
-    }
-}
