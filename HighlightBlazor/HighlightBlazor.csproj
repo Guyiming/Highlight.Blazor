@@ -4,13 +4,14 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RazorLangVersion>3.0</RazorLangVersion>
     <Authors>Guyiming</Authors>
-    <Description>Syntax highlighting for Blazor, based on highlight.js. Supports over 180 languages.</Description>
+    <Description>代码高亮组件，基于highlight.js封装而成，支持c# java json xml python等180多种语言。
+Syntax highlighting for Blazor, based on highlight.js. Supports c#, java, json, xml, python and more than 180 languages.</Description>
     <Copyright>Guyiming</Copyright>
     <PackageProjectUrl>https://github.com/Guyiming/Highlight.Blazor</PackageProjectUrl>
     <PackageIcon>highlight.png</PackageIcon>
     <RepositoryUrl>https://github.com/Guyiming/Highlight.Blazor</RepositoryUrl>
     <PackageTags>highlight, blazor, highlight.js, highlight.blazor,</PackageTags>
-    <Version>0.1.8</Version>
+    <Version>0.1.9</Version>
     <PackageReleaseNotes>based on highlight.js 13.3.1</PackageReleaseNotes>
   </PropertyGroup>
 
