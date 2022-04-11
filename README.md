@@ -32,7 +32,7 @@ These files include the js and default style of highlight.js.
 
 ## 3. Add Serivce (optional)
 
-You will need to register the highlight services with the service collection if you want to set the code style.
+You need to register the highlight services if you want to set the code style.
 ```csharp
 builder.Services.AddHighlight();
 ```
@@ -137,7 +137,7 @@ You can set different styles by `HighlightService`.
 Full supported styles list, you can see [here](https://cdnjs.com/libraries/highlight.js).
 
 ## Indent
-By set `Indent` to `false`, can show the origin code. 
+By set `Indent` to `false`, it can display the origin code. 
 
 Default value is `true`.
 
