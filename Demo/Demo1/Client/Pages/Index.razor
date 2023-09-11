@@ -1,10 +1,10 @@
 ﻿@page "/"
 @inject HighlightService highlightSrv
 
-<h4> Welcome to Highlight.Blazor</h4>
+<h2> Welcome to Highlight.Blazor</h2>
 
-<p>C# Without Highlight</p>
-<pre>
+<h3>C# Without Highlight</h3>
+<pre style="border:2px solid #0000ff;">
 <code>
                 private int currentCount = 0;
 
@@ -15,6 +15,7 @@
     </code>
 </pre>
 
+<h3>Set style</h3>
 <div>
     <input type="text" @bind-value="styleUrl" style="width:700px" />
 </div>
@@ -23,7 +24,7 @@
 
 
 
-<p>C# with indent</p>
+<h3>C# with indent</h3>
 
 <CodeHighlight>
     private int currentCount = 0;
@@ -35,7 +36,7 @@
 </CodeHighlight>
 
 
-<p>C# without indent</p>
+<h3>C# without indent</h3>
 
 <CodeHighlight Indent="false">
     private int currentCount = 0;
@@ -44,10 +45,11 @@
     {
         currentCount++;
     }
+
 </CodeHighlight>
 
 
-<p>Json with indent</p>
+<h3>Json with indent</h3>
 
 <CodeHighlight Indent="true" CodeLanguage="json">
                 {
@@ -61,11 +63,11 @@
                 }
 </CodeHighlight>
 
-<p> highlight with program</p>
+<h3> highlight with program</h3>
 
-<CodeHighlight>
-    @SourceCode
-</CodeHighlight>
+<CodeHighlight Indent=false>@SourceCode</CodeHighlight>
+
+<CodeHighlight>@SourceCode2</CodeHighlight>
 
 @code {
     string SourceCode = @"
@@ -74,6 +76,8 @@
 
     }
 ";
+
+    string SourceCode2 = "public override void init()\n{\n   Backend.Init();\n}";
 
     private string styleUrl = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/a11y-dark.min.css";
 

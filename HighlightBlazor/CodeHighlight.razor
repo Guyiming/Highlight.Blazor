@@ -1,13 +1,12 @@
 ﻿@using System.Text
 @using Microsoft.JSInterop
+@using System.Diagnostics;
 @inject IJSRuntime JS
 
 
 <pre><code class="@CodeLanguage" id="@DisplayId">@IndenttedCode</code></pre>
 
-<div style="display:none" id="@HideId">
-    @ChildContent
-</div>
+<div style="display:none" id="@HideId">@ChildContent</div>
 
 
 @code {
@@ -37,20 +36,27 @@
         }
     }
 
+    /// <summary>
+    /// 缩进代码
+    /// </summary>
+    /// <param name="originCode"></param>
+    /// <returns></returns>
     public string IndentCode(string originCode)
     {
         if (!string.IsNullOrWhiteSpace(originCode))
         {
-            var lines = originCode.Split('\n').Where(s => !string.IsNullOrWhiteSpace(s)).ToArray();
-            var spaceCount = lines[0].Length - lines[0].TrimStart().Length;
+            originCode = originCode.Trim('\n');
+            var lines = originCode.Split('\n').ToArray();
+            int spaceCount = lines[0].Length - lines[0].TrimStart().Length;
             StringBuilder sb = new StringBuilder();
             foreach (var line in lines)
             {
-                if (!string.IsNullOrWhiteSpace(line))
+                string temp = line;
+                if (line.Length > spaceCount)
                 {
-                    string s = line.Substring(spaceCount);
-                    sb.AppendLine(s);
+                    temp = line.Substring(spaceCount);
                 }
+                sb.AppendLine(temp);
             }
             return sb.ToString();
         }
