@@ -19,12 +19,30 @@
     public RenderFragment ChildContent { get; set; }
 
     [Parameter]
+    public string ChildValue{ get; set; }
+
+    [Parameter]
     public string CodeLanguage { get; set; } = "language-csharp";
 
     [Parameter]
     public bool Indent { get; set; } = true;
 
+    private bool _isFirstRenderDone = false;
 
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if(_isFirstRenderDone)
+        {
+
+            string innerText = await JS.InvokeAsync<string>("getInnterText", HideId);
+            Debug.WriteLine($"set-->{ChildValue}");
+            IndenttedCode = Indent ? IndentCode(innerText) : innerText;
+            //Debug.WriteLine($"--->{IndenttedCode}");
+            await JS.InvokeVoidAsync("setInnerHtml", DisplayId, IndenttedCode);
+            await JS.InvokeVoidAsync("highlightElementById", DisplayId);
+        }
+    }
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
@@ -33,6 +51,7 @@
             IndenttedCode = Indent ? IndentCode(innerText) : innerText;
             StateHasChanged();
             await JS.InvokeVoidAsync("highlightElementById", DisplayId);
+            _isFirstRenderDone = true;
         }
     }
 

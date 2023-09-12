@@ -3,6 +3,10 @@ window.getInnterText = (id) => {
     return document.getElementById(id).innerText;
 };
 
+window.setInnerHtml = (id, txt) => {
+    document.getElementById(id).innerHTML = txt;
+}
+
 window.highlightElementById = (id) => {
     return hljs.highlightElement(document.getElementById(id));
 };

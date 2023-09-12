@@ -67,7 +67,8 @@
 
 <CodeHighlight Indent=false>@SourceCode</CodeHighlight>
 
-<CodeHighlight>@SourceCode2</CodeHighlight>
+<CodeHighlight ChildValue="SourceCode2"></CodeHighlight>
+<button class="btn btn-primary" @onclick="ChangeCode">Change Code</button>
 
 @code {
     string SourceCode = @"
@@ -84,6 +85,12 @@
     private void ApplyStyle()
     {
         highlightSrv.SetStyleAsync(styleUrl);
+    }
+
+    private void ChangeCode()
+    {
+        SourceCode2 =SourceCode2+ "12";
+       // StateHasChanged();
     }
 
 
