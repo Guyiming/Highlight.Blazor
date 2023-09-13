@@ -90,9 +90,7 @@ Json with indent
 ```
 Highlight by program
 ```html
-<CodeHighlight>
-    @SourceCode
-</CodeHighlight>
+<CodeHighlight>@SourceCode</CodeHighlight>
 
 @code {
     string SourceCode = @"
@@ -108,7 +106,7 @@ Highlight by program
 ## Supported Languages
 Same to highlight.js. See [here](https://github.com/highlightjs/highlight.js/blob/main/SUPPORTED_LANGUAGES.md).
 
-You can set language by `CodeLanguage` property, the default value is **csharp**.
+You can set language by `CodeLanguage` property, the default value is **auto detect**.
 
 ## Supported Code Styles
 ![Screenshot](codestyle.png)

@@ -3,7 +3,7 @@
 
 <h2> Welcome to Highlight.Blazor</h2>
 
-<h3>C# Without Highlight</h3>
+<h3>1. C# Without Highlight</h3>
 <pre style="border:2px solid #0000ff;">
 <code>
                 private int currentCount = 0;
@@ -15,7 +15,7 @@
     </code>
 </pre>
 
-<h3>Set style</h3>
+<h3>2. Set style</h3>
 <div>
     <input type="text" @bind-value="styleUrl" style="width:700px" />
 </div>
@@ -24,7 +24,7 @@
 
 
 
-<h3>C# with indent</h3>
+<h3>3. C# with indent</h3>
 
 <CodeHighlight>
     private int currentCount = 0;
@@ -36,7 +36,7 @@
 </CodeHighlight>
 
 
-<h3>C# without indent</h3>
+<h3>4. C# without indent</h3>
 
 <CodeHighlight Indent="false">
     private int currentCount = 0;
@@ -49,7 +49,7 @@
 </CodeHighlight>
 
 
-<h3>Json with indent</h3>
+<h3>5. Json with indent</h3>
 
 <CodeHighlight Indent="true" CodeLanguage="json">
                 {
@@ -63,11 +63,12 @@
                 }
 </CodeHighlight>
 
-<h3> highlight with program</h3>
+<h3>6. highlight with program</h3>
 
 <CodeHighlight Indent=false>@SourceCode</CodeHighlight>
 
-<CodeHighlight ChildValue="SourceCode2"></CodeHighlight>
+<h3>7. highlight with program and change it</h3>
+<CodeHighlight Code=@AnotherCode></CodeHighlight>
 <button class="btn btn-primary" @onclick="ChangeCode">Change Code</button>
 
 @code {
@@ -78,22 +79,19 @@
     }
 ";
 
-    string SourceCode2 = "public override void init()\n{\n   Backend.Init();\n}";
+    string AnotherCode = "public override void init()\n{\n   Backend.Init();\n}";
 
     private string styleUrl = "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/a11y-dark.min.css";
 
-    private void ApplyStyle()
+    private async void ApplyStyle()
     {
-        highlightSrv.SetStyleAsync(styleUrl);
+       await highlightSrv.SetStyleAsync(styleUrl);
     }
 
     private void ChangeCode()
     {
-        SourceCode2 =SourceCode2+ "12";
-       // StateHasChanged();
+        Random r = new Random();
+        AnotherCode = "public override void init_" + r.Next(0,100) + "()\n{\n   Backend.Init();\n}";
     }
-
-
-
 
 }

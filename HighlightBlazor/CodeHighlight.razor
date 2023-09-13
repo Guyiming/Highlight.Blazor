@@ -4,7 +4,7 @@
 @inject IJSRuntime JS
 
 
-<pre><code class="@CodeLanguage" id="@DisplayId">@IndenttedCode</code></pre>
+<pre><code class="@CodeLanguage" id="@DisplayId">@FinalCode</code></pre>
 
 <div style="display:none" id="@HideId">@ChildContent</div>
 
@@ -13,72 +13,86 @@
 
     string HideId { get; set; } = Guid.NewGuid().ToString();
     string DisplayId { get; set; } = Guid.NewGuid().ToString();
-    string IndenttedCode { get; set; }
+    string FinalCode { get; set; }
 
     [Parameter]
     public RenderFragment ChildContent { get; set; }
 
     [Parameter]
-    public string ChildValue{ get; set; }
-
-    [Parameter]
-    public string CodeLanguage { get; set; } = "language-csharp";
+    public string CodeLanguage { get; set; }
 
     [Parameter]
     public bool Indent { get; set; } = true;
+
+    [Parameter]
+    public string Code { get; set; }
 
     private bool _isFirstRenderDone = false;
 
 
     protected override async Task OnParametersSetAsync()
     {
-        if(_isFirstRenderDone)
+        if (_isFirstRenderDone)
         {
-
-            string innerText = await JS.InvokeAsync<string>("getInnterText", HideId);
-            Debug.WriteLine($"set-->{ChildValue}");
-            IndenttedCode = Indent ? IndentCode(innerText) : innerText;
-            //Debug.WriteLine($"--->{IndenttedCode}");
-            await JS.InvokeVoidAsync("setInnerHtml", DisplayId, IndenttedCode);
-            await JS.InvokeVoidAsync("highlightElementById", DisplayId);
+            if(!string.IsNullOrEmpty(Code))
+            {
+                FinalCode = ProcessCode(Code);
+                await JS.InvokeVoidAsync("setInnerHtml", DisplayId, FinalCode);
+                await JS.InvokeVoidAsync("highlightElementById", DisplayId);
+            } 
         }
     }
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            string innerText = await JS.InvokeAsync<string>("getInnterText", HideId);
-            IndenttedCode = Indent ? IndentCode(innerText) : innerText;
-            StateHasChanged();
+            if (!string.IsNullOrEmpty(Code))
+            {
+                FinalCode = ProcessCode(Code);
+            }
+            else
+            {
+                string innerText = await JS.InvokeAsync<string>("getInnterText", HideId);
+                FinalCode = ProcessCode(innerText);
+            }
+            await JS.InvokeVoidAsync("setInnerHtml", DisplayId, FinalCode);
             await JS.InvokeVoidAsync("highlightElementById", DisplayId);
             _isFirstRenderDone = true;
         }
     }
 
     /// <summary>
-    /// 缩进代码
+    /// 代码处理
     /// </summary>
     /// <param name="originCode"></param>
     /// <returns></returns>
-    public string IndentCode(string originCode)
+    public string ProcessCode(string originCode)
     {
-        if (!string.IsNullOrWhiteSpace(originCode))
+        if (Indent)
         {
-            originCode = originCode.Trim('\n');
-            var lines = originCode.Split('\n').ToArray();
-            int spaceCount = lines[0].Length - lines[0].TrimStart().Length;
-            StringBuilder sb = new StringBuilder();
-            foreach (var line in lines)
+            if (!string.IsNullOrWhiteSpace(originCode))
             {
-                string temp = line;
-                if (line.Length > spaceCount)
+                originCode = originCode.Trim('\n');
+                var lines = originCode.Split('\n').ToArray();
+                int spaceCount = lines[0].Length - lines[0].TrimStart().Length;
+                StringBuilder sb = new StringBuilder();
+                foreach (var line in lines)
                 {
-                    temp = line.Substring(spaceCount);
+                    string temp = line;
+                    if (line.Length > spaceCount)
+                    {
+                        temp = line.Substring(spaceCount);
+                    }
+                    sb.AppendLine(temp);
                 }
-                sb.AppendLine(temp);
+                return sb.ToString();
             }
-            return sb.ToString();
+            return string.Empty;
         }
-        return string.Empty;
+        else
+        {
+            return originCode;
+        }
+
     }
 }

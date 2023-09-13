@@ -1,6 +1,7 @@
 
 window.getInnterText = (id) => {
-    return document.getElementById(id).innerText;
+    var ele = document.getElementById(id);
+    return ele == null ? "" : ele.innerText;
 };
 
 window.setInnerHtml = (id, txt) => {
