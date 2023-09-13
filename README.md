@@ -125,12 +125,12 @@ private void ChangeCode()
 ```
 **Use `Code=@AnotherCode` instead of `<CodeHighlight>@AnotherCode</CodeHighlight>`, or it won't render immediately.**
 
-## Supported Languages
+## 5. Supported Languages
 Same to highlight.js. See [here](https://github.com/highlightjs/highlight.js/blob/main/SUPPORTED_LANGUAGES.md).
 
 You can set language by `CodeLanguage` property, the default is empty, it means **auto detect**.
 
-## Supported Code Styles
+## 6. Supported Code Styles
 ![Screenshot](codestyle.png)
 
 You can set different styles by `HighlightService`.
@@ -156,7 +156,7 @@ You can set different styles by `HighlightService`.
 
 Full supported styles list, you can see [here](https://cdnjs.com/libraries/highlight.js).
 
-## Indent
+## 7. Indent
 By set `Indent` to `false`, it can display the origin code. Default is `true`.
 
 
