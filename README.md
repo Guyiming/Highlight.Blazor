@@ -9,7 +9,7 @@ Syntax highlighting for Blazor, based on [highlight.js](https://highlightjs.org/
 ![Screenshot](screenshot.png)
 
 # How to use
-You can install the package via the NuGet package manager just search for *Highlight.Blazor*.
+You can install the package via the NuGet package manager just search for **HighlightBlazor**.
 
 
 
@@ -39,7 +39,7 @@ builder.Services.AddHighlight();
 
 
 ## 4. Happy to use
-### 4.1 C# without Highlight
+### 4.1 C# code without Highlight
 ```html
 <pre>
     <code>
@@ -52,7 +52,7 @@ builder.Services.AddHighlight();
     </code>
 </pre>
 ```
-### 4.2 C# with indent
+### 4.2 C# code with indent
 ```html
         <CodeHighlight>
                 private int currentCount = 0;
@@ -63,7 +63,7 @@ builder.Services.AddHighlight();
                 }
         </CodeHighlight>
 ```
-### 4.3 C# without indent
+### 4.3 C# code without indent
 ```html
         <CodeHighlight Indent="false">
                 private int currentCount = 0;
@@ -102,15 +102,15 @@ builder.Services.AddHighlight();
 
 }
 ```
-**note**:
-`<CodeHighlight>@SourceCode</CodeHighlight>`
-and
-```
-<CodeHighlight>
-    @SourceCode
-</CodeHighlight>
-```
-has different render style. The second one cause more blanks and empty lines.
+> **👀NOTE**:
+> `<CodeHighlight>@SourceCode</CodeHighlight>`
+> and
+> ```
+> <CodeHighlight>
+> 	@SourceCode
+> </CodeHighlight>
+> ```
+> has different render effects. The second one causes more blanks and empty lines.
 
 ### 4.6 Change the code in program
 ```html
@@ -123,7 +123,7 @@ private void ChangeCode()
     AnotherCode = "public override void init_" + r.Next(0,100) + "()\n{\n   Backend.Init();\n}";
 }
 ```
-**Use** `Code=@AnotherCode` instead of `<CodeHighlight>@AnotherCode</CodeHighlight>`, or it won't render immediately.
+**Use `Code=@AnotherCode` instead of `<CodeHighlight>@AnotherCode</CodeHighlight>`, or it won't render immediately.**
 
 ## Supported Languages
 Same to highlight.js. See [here](https://github.com/highlightjs/highlight.js/blob/main/SUPPORTED_LANGUAGES.md).
