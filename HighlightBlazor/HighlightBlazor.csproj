@@ -11,7 +11,7 @@ Syntax highlighting for Blazor, based on highlight.js. Supports c#, java, json, 
     <PackageIcon>highlight.png</PackageIcon>
     <RepositoryUrl>https://github.com/Guyiming/Highlight.Blazor</RepositoryUrl>
     <PackageTags>highlight, blazor, highlight.js, c#, java, json, xml, python</PackageTags>
-    <Version>0.1.9</Version>
+    <Version>0.1.10</Version>
     <PackageReleaseNotes>based on highlight.js 13.3.1</PackageReleaseNotes>
   </PropertyGroup>
 

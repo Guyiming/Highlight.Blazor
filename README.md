@@ -39,7 +39,7 @@ builder.Services.AddHighlight();
 
 
 ## 4. Happy to use
-C# without Highlight
+### 4.1 C# without Highlight
 ```html
 <pre>
     <code>
@@ -52,7 +52,7 @@ C# without Highlight
     </code>
 </pre>
 ```
-C# with indent
+### 4.2 C# with indent
 ```html
         <CodeHighlight>
                 private int currentCount = 0;
@@ -63,7 +63,7 @@ C# with indent
                 }
         </CodeHighlight>
 ```
-C# without indent
+### 4.3 C# without indent
 ```html
         <CodeHighlight Indent="false">
                 private int currentCount = 0;
@@ -74,7 +74,7 @@ C# without indent
                 }
         </CodeHighlight>
 ```
-Json with indent
+### 4.4 Json with indent
 ```html
         <CodeHighlight Indent="true" CodeLanguage="json">
                     {
@@ -88,7 +88,7 @@ Json with indent
                     }
         </CodeHighlight>
 ```
-Highlight by program
+### 4.5 Highlight by program
 ```html
 <CodeHighlight>@SourceCode</CodeHighlight>
 
@@ -102,11 +102,33 @@ Highlight by program
 
 }
 ```
+**note**:
+`<CodeHighlight>@SourceCode</CodeHighlight>`
+and
+```
+<CodeHighlight>
+    @SourceCode
+</CodeHighlight>
+```
+has different render style. The second one cause more blanks and empty lines.
+
+### 4.6 Change the code in program
+```html
+<CodeHighlight Code=@AnotherCode></CodeHighlight>
+```
+```csharp
+private void ChangeCode()
+{
+    Random r = new Random();
+    AnotherCode = "public override void init_" + r.Next(0,100) + "()\n{\n   Backend.Init();\n}";
+}
+```
+**Use** `Code=@AnotherCode` instead of `<CodeHighlight>@AnotherCode</CodeHighlight>`, or it won't render immediately.
 
 ## Supported Languages
 Same to highlight.js. See [here](https://github.com/highlightjs/highlight.js/blob/main/SUPPORTED_LANGUAGES.md).
 
-You can set language by `CodeLanguage` property, the default value is **auto detect**.
+You can set language by `CodeLanguage` property, the default is empty, it means **auto detect**.
 
 ## Supported Code Styles
 ![Screenshot](codestyle.png)
@@ -135,8 +157,6 @@ You can set different styles by `HighlightService`.
 Full supported styles list, you can see [here](https://cdnjs.com/libraries/highlight.js).
 
 ## Indent
-By set `Indent` to `false`, it can display the origin code. 
-
-Default value is `true`.
+By set `Indent` to `false`, it can display the origin code. Default is `true`.
 
 
