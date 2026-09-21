@@ -30,7 +30,7 @@ Add the following line to the `head` tag of your `_Host.cshtml` (Blazor Server a
 ```
 These files include the js and default style of highlight.js.
 
-## 3. Add Serivce (optional)
+## 3. Add Service (optional)
 
 You need to register the highlight services if you want to set the code style.
 ```csharp
@@ -158,5 +158,3 @@ Full supported styles list, you can see [here](https://cdnjs.com/libraries/highl
 
 ## 7. Indent
 By set `Indent` to `false`, it can display the origin code. Default is `true`.
-
-
